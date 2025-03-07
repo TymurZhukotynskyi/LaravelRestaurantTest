@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('api')->group(function () {
-    Route::get('/create-booking', [BookingController::class, 'createBooking']);
+    Route::post('/create-booking', [BookingController::class, 'createBooking']);
     Route::get('/bookings', [BookingController::class, 'getBookings']);
-    Route::get('/cancel-booking/{id}', [BookingController::class, 'cancel']);
+    Route::delete('/cancel-booking/{id}', [BookingController::class, 'cancel']);
 });
