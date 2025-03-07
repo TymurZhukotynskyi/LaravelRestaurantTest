@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8000:8000" # Доступ до Laravel через порт 8000
+        volumes:
+            - .:/var/www
+        depends_on:
+            - db
+        environment:
+            - APP_ENV=local
+            - APP_DEBUG=true
+            - DB_CONNECTION=pgsql
+            - DB_HOST=db
+            - DB_PORT=5432
+            - DB_DATABASE=laravel
+            - DB_USERNAME=laravel
+            - DB_PASSWORD=secret
+
+    db:
+        image: postgres:15
+        environment:
+            - POSTGRES_DB=laravel
+            - POSTGRES_USER=laravel
+            - POSTGRES_PASSWORD=secret
+        ports:
+            - "5432:5432" # Опціонально, якщо потрібен доступ до БД ззовні
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+
+volumes:
+    pgdata:
